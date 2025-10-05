@@ -12,7 +12,7 @@ import {
   Paper,
   IconButton
 } from "@mui/material";
-import { Add, Edit, Delete } from "@mui/icons-material";
+import { Add, Edit, Delete, DeleteOutlineOutlined, EditOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import ModalProduto from "./ModalProduto";
 
@@ -90,7 +90,7 @@ export default function GestaoProdutos() {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ padding: 3 }}>
+    <Container maxWidth="xl" sx={{ padding: 3, border: '1px solid #e0e0e0', borderRadius: 2 }}>
       {/* Cabeçalho */}
       <Box 
         sx={{ 
@@ -109,12 +109,13 @@ export default function GestaoProdutos() {
           startIcon={<Add />}
           onClick={handleNovoProduto}
           sx={{
-            backgroundColor: '#2c2c2c',
+            backgroundColor: '#000',
             color: 'white',
             borderRadius: '8px',
             padding: '10px 20px',
             textTransform: 'none',
             fontWeight: 'bold',
+            fontSize: '15px',
             '&:hover': {
               backgroundColor: '#404040'
             }
@@ -132,7 +133,7 @@ export default function GestaoProdutos() {
           borderRadius: '25px',
           padding: '4px',
           marginBottom: 3,
-          width: 'fit-content'
+          width: '100%'
         }}
       >
         <Button 
@@ -140,11 +141,11 @@ export default function GestaoProdutos() {
           sx={{
             backgroundColor: activeTab === 'bebidas' ? 'white' : 'transparent',
             color: 'black',
+            width: '35%',
             borderRadius: '20px',
             padding: '8px 24px',
             textTransform: 'none',
             fontWeight: 500,
-            border: 'none',
             boxShadow: activeTab === 'bebidas' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             '&:hover': {
               backgroundColor: activeTab === 'bebidas' ? 'white' : 'rgba(255,255,255,0.5)'
@@ -158,11 +159,11 @@ export default function GestaoProdutos() {
           sx={{
             backgroundColor: activeTab === 'pratos' ? 'white' : 'transparent',
             color: 'black',
+            width: '30%',
             borderRadius: '20px',
             padding: '8px 24px',
             textTransform: 'none',
             fontWeight: 500,
-            border: 'none',
             boxShadow: activeTab === 'pratos' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             '&:hover': {
               backgroundColor: activeTab === 'pratos' ? 'white' : 'rgba(255,255,255,0.5)'
@@ -176,11 +177,11 @@ export default function GestaoProdutos() {
           sx={{
             backgroundColor: activeTab === 'sobremesas' ? 'white' : 'transparent',
             color: 'black',
+            width: '35%',
             borderRadius: '20px',
             padding: '8px 24px',
             textTransform: 'none',
             fontWeight: 500,
-            border: 'none',
             boxShadow: activeTab === 'sobremesas' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             '&:hover': {
               backgroundColor: activeTab === 'sobremesas' ? 'white' : 'rgba(255,255,255,0.5)'
@@ -192,10 +193,10 @@ export default function GestaoProdutos() {
       </Box>
 
       {/* Tabela de Produtos */}
-      <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 1 }}>
+      <TableContainer>
         <Table>
           <TableHead>
-            <TableRow sx={{ backgroundColor: '#f8f9fa' }}>
+            <TableRow>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Nome</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Preço</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Cor</TableCell>
@@ -216,11 +217,11 @@ export default function GestaoProdutos() {
                 <TableCell>
                   <Box
                     sx={{
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       backgroundColor: produto.cor,
                       borderRadius: 1,
-                      border: '1px solid #ddd'
+                      border: '1px'
                     }}
                   />
                 </TableCell>
@@ -234,7 +235,7 @@ export default function GestaoProdutos() {
                         '&:hover': { backgroundColor: '#f0f0f0' }
                       }}
                     >
-                      <Edit fontSize="small" />
+                      <EditOutlined />
                     </IconButton>
                     <IconButton 
                       size="small" 
@@ -244,7 +245,7 @@ export default function GestaoProdutos() {
                         '&:hover': { backgroundColor: '#ffebee' }
                       }}
                     >
-                      <Delete fontSize="small" />
+                      <DeleteOutlineOutlined />
                     </IconButton>
                   </Box>
                 </TableCell>
