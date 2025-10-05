@@ -1,16 +1,89 @@
-# React + Vite
+# 🐟 Sistema de Caixa - Peixaria
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Sistema moderno de ponto de venda desenvolvido especificamente para restaurante, com interface intuitiva e funcionalidades completas de gestão.
 
-Currently, two official plugins are available:
+## 🛠️ Instalação e Configuração
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Clone o repositório
+```bash
+git clone https://github.com/BarbaraLemes/caixa_peixaria.git
+cd caixa_peixaria
+```
 
-## React Compiler
+### 2. Instale as dependências
+```bash
+npm install
+# ou
+yarn install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 3. Execute o projeto
+```bash
+npm run dev
+# ou
+yarn dev
+```
 
-## Expanding the ESLint configuration
+### 4. Acesse a aplicação
+Abra seu navegador e acesse: `http://localhost:5173`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## 🎯 Scripts Disponíveis
+
+```bash
+# Execução em modo desenvolvimento
+npm run dev
+
+# Build para produção
+npm run build
+
+# Preview da build de produção
+npm run preview
+
+# Linting do código
+npm run lint
+```
+
+## 📖 Sobre o Projeto
+
+O **Sistema de Caixa - Peixaria** é uma aplicação web moderna desenvolvida com React e Material-UI, projetada para facilitar as operações de venda em um restaurante. O sistema oferece uma interface limpa e intuitiva para gerenciar produtos, processar vendas e acompanhar o desempenho diário.
+
+### ✨ Funcionalidades Principais
+
+- 🛒 **Gestão de Produtos**: CRUD completo com categorização (Bebidas, Pratos, Sobremesas)
+- 💰 **Sistema de Caixa**: Interface para processamento de vendas
+- 💳 **Múltiplas Formas de Pagamento**: Dinheiro e cartão com cálculo automático de troco
+- 🎨 **Personalização Visual**: Seletor de cores dinâmico para produtos
+- 📊 **Dashboard**: Acompanhamento de vendas diárias e estatísticas
+- 📱 **Responsivo**: Interface adaptável para desktop e mobile
+
+## 🚀 Tecnologias Utilizadas
+
+- **Frontend Framework**: React 19.x
+- **Build Tool**: Vite
+- **UI Library**: Material-UI (MUI)
+- **Roteamento**: React Router DOM
+- **Linguagem**: JavaScript (ES6+)
+- **Estilização**: CSS Modules + MUI System
+- **Ícones**: Material Icons
+
+## 📱 Uso da Aplicação
+
+### 1. Gestão de Produtos
+- Acesse a seção de produtos
+- Adicione novos itens com nome, preço, categoria e cor
+- Edite ou remova produtos existentes
+- Alterne entre categorias usando as abas
+
+### 2. Processamento de Vendas
+- Selecione produtos na interface principal
+- Escolha a forma de pagamento (dinheiro/cartão)
+- Para pagamento em dinheiro, insira o valor recebido
+- O sistema calcula automaticamente o troco
+- Finalize a venda
+
+### 3. Acompanhamento
+- Visualize o total de vendas do dia
+- Acompanhe o número de pedidos processados
+- Monitore as estatísticas no header
+
