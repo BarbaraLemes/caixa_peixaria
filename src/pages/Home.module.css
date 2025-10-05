@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  height: 100vh;
+}
+
+.produtos {
+  flex: 2; /* Ocupa 2/3 do espaço */
+  min-width: 0; /* Permite shrink */
+}
+
+.pagamento {
+  flex: 1; /* Ocupa 1/3 do espaço */
+  min-width: 300px; /* Largura mínima */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .produtos,
+  .pagamento {
+    flex: none;
+  }
+} 
