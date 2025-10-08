@@ -1,7 +1,9 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./pages/Home"
+//colocar aqui para redenrizar o arquivo novo RoutesApp.jsx
 
-function App() {
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>

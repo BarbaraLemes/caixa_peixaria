@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Typography, Button, Avatar } from "@mui/material";
 import {
   Person,
@@ -5,21 +6,29 @@ import {
   ExitToApp,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
+import { HeaderProps } from '@/types';
 
-export default function Header() {
+const Header: React.FC<HeaderProps> = ({ usuario, onLogout }) => {
   // Mock data - depois virá de contexto/estado global
-  const usuario = "João Silva";
+  const nomeUsuario = usuario?.nome || "João Silva";
   const dataAtual = new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  const totalDia = "R$ 1230,00";
-  const numeroPedidos = 15;
+  const totalDia = `R$ ${(usuario?.vendas || 1230).toFixed(2).replace('.', ',')}`;
+  const numeroPedidos = usuario?.pedidos || 15;
 
-  const formatarData = (data) => {
+  const formatarData = (data: string): string => {
     return data.charAt(0).toUpperCase() + data.slice(1);
+  };
+
+  const handleLogout = (): void => {
+    if (onLogout) {
+      onLogout();
+    }
+    // Lógica de logout aqui
   };
 
   return (
@@ -38,7 +47,6 @@ export default function Header() {
         {/* Avatar e Usuario */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
           <Avatar
-            variant="soft"
             sx={{
               backgroundColor: "#80b1d2ff",
               width: 45,
@@ -55,7 +63,7 @@ export default function Header() {
               Sistema de Caixa
             </Typography>
             <Typography variant="body2" sx={{ color: "#666" }}>
-              {usuario}
+              {nomeUsuario}
             </Typography>
           </Box>
         </Box>
@@ -113,6 +121,7 @@ export default function Header() {
         <Button
           variant="outlined"
           startIcon={<ExitToApp />}
+          onClick={handleLogout}
           sx={{
             borderColor: "#000",
             color: "#000",
@@ -131,4 +140,6 @@ export default function Header() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Header;

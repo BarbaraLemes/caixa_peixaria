@@ -1,10 +1,11 @@
+import React from 'react';
 import GestaoProdutos from "../components/GestaoProdutos";
 import Header from "../components/Header";
 import Produtos from "../components/Produtos";
 import SecaoPagamento from "../components/SecaoPagamento";
 import styles from "./Home.module.css";
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <>
       <Header />
@@ -14,9 +15,11 @@ export default function Home() {
           <GestaoProdutos />
         </div>
         <div className={styles.pagamento}>
-          <SecaoPagamento />
+          <SecaoPagamento total={0} />
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Home;

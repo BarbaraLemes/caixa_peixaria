@@ -1,3 +1,4 @@
+import React from 'react';
 import { 
   Box, 
   Typography, 
@@ -15,31 +16,38 @@ import {
 import { Add, Edit, Delete, DeleteOutlineOutlined, EditOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import ModalProduto from "./ModalProduto";
+import { Produto, Categoria } from '@/types';
 
-export default function GestaoProdutos() {
-  const [activeTab, setActiveTab] = useState('bebidas');
-  const [modalOpen, setModalOpen] = useState(false);
-  const [produtoEditando, setProdutoEditando] = useState(null);
+interface ProdutosList {
+  bebidas: Produto[];
+  pratos: Produto[];
+  sobremesas: Produto[];
+}
+
+const GestaoProdutos: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Categoria>('bebidas');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [produtoEditando, setProdutoEditando] = useState<Produto | null>(null);
 
   // Estado para produtos (depois virá de uma API/Context)
-  const [produtos, setProdutos] = useState({
+  const [produtos, setProdutos] = useState<ProdutosList>({
     bebidas: [
-      { id: 1, nome: 'Refrigerante', preco: 'R$ 5,00', cor: '#ff6b35' },
-      { id: 2, nome: 'Suco', preco: 'R$ 6,00', cor: '#f39c12' },
-      { id: 3, nome: 'Cerveja', preco: 'R$ 10,00', cor: '#27ae60' },
-      { id: 4, nome: 'Água', preco: 'R$ 3,00', cor: '#3498db' }
+      { id: '1', nome: 'Refrigerante', preco: 5.00, categoria: 'bebidas', cor: '#ff6b35' },
+      { id: '2', nome: 'Suco', preco: 6.00, categoria: 'bebidas', cor: '#f39c12' },
+      { id: '3', nome: 'Cerveja', preco: 10.00, categoria: 'bebidas', cor: '#27ae60' },
+      { id: '4', nome: 'Água', preco: 3.00, categoria: 'bebidas', cor: '#3498db' }
     ],
     pratos: [
-      { id: 5, nome: 'Peixe Grelhado', preco: 'R$ 25,00', cor: '#e74c3c' },
-      { id: 6, nome: 'Camarão', preco: 'R$ 35,00', cor: '#9b59b6' },
-      { id: 7, nome: 'Lula', preco: 'R$ 20,00', cor: '#34495e' },
-      { id: 8, nome: 'Moqueca', preco: 'R$ 30,00', cor: '#e67e22' }
+      { id: '5', nome: 'Peixe Grelhado', preco: 25.00, categoria: 'pratos', cor: '#e74c3c' },
+      { id: '6', nome: 'Camarão', preco: 35.00, categoria: 'pratos', cor: '#9b59b6' },
+      { id: '7', nome: 'Lula', preco: 20.00, categoria: 'pratos', cor: '#34495e' },
+      { id: '8', nome: 'Moqueca', preco: 30.00, categoria: 'pratos', cor: '#e67e22' }
     ],
     sobremesas: [
-      { id: 9, nome: 'Pudim', preco: 'R$ 8,00', cor: '#f1c40f' },
-      { id: 10, nome: 'Sorvete', preco: 'R$ 6,00', cor: '#1abc9c' },
-      { id: 11, nome: 'Torta', preco: 'R$ 12,00', cor: '#e91e63' },
-      { id: 12, nome: 'Mousse', preco: 'R$ 10,00', cor: '#673ab7' }
+      { id: '9', nome: 'Pudim', preco: 8.00, categoria: 'sobremesas', cor: '#f1c40f' },
+      { id: '10', nome: 'Sorvete', preco: 6.00, categoria: 'sobremesas', cor: '#1abc9c' },
+      { id: '11', nome: 'Torta', preco: 12.00, categoria: 'sobremesas', cor: '#e91e63' },
+      { id: '12', nome: 'Mousse', preco: 10.00, categoria: 'sobremesas', cor: '#673ab7' }
     ]
   });
 
@@ -52,17 +60,17 @@ export default function GestaoProdutos() {
   const produtosAtivos = produtos[activeTab] || [];
 
   // Funções CRUD
-  const handleNovoProduto = () => {
+  const handleNovoProduto = (): void => {
     setProdutoEditando(null);
     setModalOpen(true);
   };
 
-  const handleEditarProduto = (produto) => {
+  const handleEditarProduto = (produto: Produto): void => {
     setProdutoEditando(produto);
     setModalOpen(true);
   };
 
-  const handleExcluirProduto = (id) => {
+  const handleExcluirProduto = (id: string): void => {
     if (window.confirm('Tem certeza que deseja excluir este produto?')) {
       setProdutos(prev => ({
         ...prev,
@@ -71,7 +79,7 @@ export default function GestaoProdutos() {
     }
   };
 
-  const handleSalvarProduto = (produto) => {
+  const handleSalvarProduto = (produto: Produto): void => {
     if (produtoEditando) {
       // Editando produto existente
       setProdutos(prev => ({
@@ -213,7 +221,7 @@ export default function GestaoProdutos() {
                 }}
               >
                 <TableCell sx={{ fontSize: '1rem' }}>{produto.nome}</TableCell>
-                <TableCell sx={{ fontSize: '1rem' }}>{produto.preco}</TableCell>
+                <TableCell sx={{ fontSize: '1rem' }}>R$ {produto.preco.toFixed(2).replace('.', ',')}</TableCell>
                 <TableCell>
                   <Box
                     sx={{
@@ -260,9 +268,10 @@ export default function GestaoProdutos() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         produto={produtoEditando}
-        categoria={activeTab}
         onSave={handleSalvarProduto}
       />
     </Container>
   );
-}
+};
+
+export default GestaoProdutos;

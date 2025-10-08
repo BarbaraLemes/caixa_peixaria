@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -13,19 +14,19 @@ import {
 import { Close } from "@mui/icons-material";
 import DoneIcon from '@mui/icons-material/Done';
 import { useState, useEffect } from "react";
+import { ProdutoModalProps, ProdutoFormData, Categoria } from '@/types';
 
-export default function ModalProduto({ 
+const ModalProduto: React.FC<ProdutoModalProps> = ({ 
   open, 
   onClose, 
-  produto = null, 
-  categoria,
+  produto = null,
   onSave 
-}) {
-  const [formData, setFormData] = useState({
+}) => {
+  const [formData, setFormData] = useState<ProdutoFormData>({
     nome: '',
     preco: '',
     cor: '#3498db',
-    categoria: categoria || 'bebidas'
+    categoria: 'bebidas'
   });
 
   // Atualizar formulário quando produto muda (edição)
@@ -33,21 +34,21 @@ export default function ModalProduto({
     if (produto) {
       setFormData({
         nome: produto.nome,
-        preco: produto.preco.replace('R$ ', '').replace(',', '.'),
+        preco: produto.preco.toFixed(2).replace('.', ','),
         cor: produto.cor,
-        categoria: categoria || 'bebidas'
+        categoria: produto.categoria
       });
     } else {
       setFormData({
         nome: '',
         preco: '',
         cor: '#3498db',
-        categoria: categoria || 'bebidas'
+        categoria: 'bebidas'
       });
     }
-  }, [produto, categoria]);
+  }, [produto]);
 
-  const handleChange = (field) => (event) => {
+  const handleChange = (field: keyof ProdutoFormData) => (event: React.ChangeEvent<HTMLInputElement>) => {
     if (field === 'preco') {
       // Remove tudo que não é número
       const apenasNumeros = event.target.value.replace(/\D/g, '');
@@ -69,7 +70,7 @@ export default function ModalProduto({
   };
 
   // Função para exibir o valor formatado no campo
-  const formatarValorExibicao = (valor) => {
+  const formatarValorExibicao = (valor: string): string => {
     if (!valor || valor === '0.00') return '';
     const numeroFormatado = parseFloat(valor).toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
@@ -78,13 +79,13 @@ export default function ModalProduto({
     return numeroFormatado;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     if (!formData.nome || !formData.preco) return;
 
     const produtoFormatado = {
       ...formData,
-      id: produto?.id || Date.now(),
-      preco: `R$ ${parseFloat(formData.preco).toFixed(2).replace('.', ',')}`
+      id: produto?.id || Date.now().toString(),
+      preco: parseFloat(formData.preco)
     };
 
     onSave(produtoFormatado);
@@ -219,7 +220,7 @@ export default function ModalProduto({
                     boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
                   }
                 }}
-                onClick={() => document.getElementById('color-picker').click()}
+                onClick={() => document.getElementById('color-picker')?.click()}
               />
               
               {/* Color Picker invisível */}
@@ -257,7 +258,7 @@ export default function ModalProduto({
               <Button
                 variant="outlined"
                 size="small"
-                onClick={() => document.getElementById('color-picker').click()}
+                onClick={() => document.getElementById('color-picker')?.click()}
                 sx={{
                   minWidth: 'auto',
                   padding: '8px 12px',
@@ -341,4 +342,6 @@ export default function ModalProduto({
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default ModalProduto;

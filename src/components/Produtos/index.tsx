@@ -1,8 +1,14 @@
+import React from 'react';
 import { Grid, Box, Typography, Button, ButtonGroup } from "@mui/material";
 import { useState } from "react";
+import { Categoria } from '@/types';
 
-export default function Produtos() {
-  const [activeTab, setActiveTab] = useState('bebidas');
+interface ProdutosProps {
+  onProdutoSelect?: (produto: any) => void;
+}
+
+const Produtos: React.FC<ProdutosProps> = ({ onProdutoSelect }) => {
+  const [activeTab, setActiveTab] = useState<Categoria>('bebidas');
 
   return (
     <Box 
@@ -88,4 +94,6 @@ export default function Produtos() {
       {/* Adicionar aqui o componente de produtos, onde provavelmente será feito o mapeamento dos produtos e pegar de uma API */}
     </Box>
   );
-}
+};
+
+export default Produtos;

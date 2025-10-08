@@ -1,11 +1,27 @@
+import React from 'react';
 import { Box, Typography, Button, TextField, Divider } from "@mui/material";
 import { useState } from "react";
+import { MetodoPagamento, SecaoPagamentoProps } from '@/types';
 
-export default function SecaoPagamento() {
-    const [paymentMethod, setPaymentMethod] = useState('');//verificar se vai deixar vazio ou colocar um valor padrão
-    const [receivedValue, setReceivedValue] = useState('');
-    const total = 0.00;
-    const change = receivedValue ? (parseFloat(receivedValue) - total).toFixed(2) : '0,00';
+const SecaoPagamento: React.FC<SecaoPagamentoProps> = ({ total = 0, onPagamento }) => {
+    const [paymentMethod, setPaymentMethod] = useState<MetodoPagamento | ''>('');//verificar se vai deixar vazio ou colocar um valor padrão
+    const [receivedValue, setReceivedValue] = useState<string>('');
+    const change = receivedValue ? (parseFloat(receivedValue.replace(',', '.')) - total).toFixed(2) : '0,00';
+
+    const handleConcluirVenda = (): void => {
+        if (paymentMethod !== '') {
+            const pagamentoData = {
+                metodo: paymentMethod as MetodoPagamento,
+                valor: total,
+                valorRecebido: paymentMethod === 'dinheiro' ? parseFloat(receivedValue.replace(',', '.')) : undefined,
+                troco: paymentMethod === 'dinheiro' ? parseFloat(change) : undefined
+            };
+            
+            if (onPagamento) {
+                onPagamento(pagamentoData);
+            }
+        }
+    };
 
     return (
         <Box 
@@ -43,7 +59,7 @@ export default function SecaoPagamento() {
             {/* Total */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total</Typography>
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>R$ 0,00</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>R$ {total.toFixed(2).replace('.', ',')}</Typography>
             </Box>
 
             {/* Botões de Pagamento */}
@@ -112,6 +128,7 @@ export default function SecaoPagamento() {
             {/* Botão Concluir Venda */}
             <Button 
                 variant="contained"
+                onClick={handleConcluirVenda}
                 sx={{ 
                     backgroundColor: '#7c9ff5',
                     padding: '12px',
@@ -127,4 +144,6 @@ export default function SecaoPagamento() {
             </Button>
         </Box>
     );
-}
+};
+
+export default SecaoPagamento;
